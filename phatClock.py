@@ -70,6 +70,8 @@ def numName(num):
         return "forty"
     elif num == 50:
         return "fifty"
+    elif num == 0:
+        return "twelve"
     elif num > 20 and num < 30:
         return "twenty-"+numName(num-20)
     elif num > 30 and num < 40:
