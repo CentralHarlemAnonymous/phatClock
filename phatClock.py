@@ -113,4 +113,4 @@ while True:
     # Scroll the buffer content
     scrollphathd.scroll()
     # Wait for 0.1s
-    time.sleep(0.1)
+    time.sleep(0.05)
