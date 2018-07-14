@@ -46,7 +46,7 @@ def numName(num):
         return "ten"
     elif num == 11:
         return "eleven"
-    elif num == 12 or num == 0:
+    elif num == 12:
         return "twelve"
     elif num == 13:
         return "thirteen"
@@ -70,6 +70,8 @@ def numName(num):
         return "forty"
     elif num == 50:
         return "fifty"
+    elif num == 0:
+        return "twelve"
     elif num > 20 and num < 30:
         return "twenty-"+numName(num-20)
     elif num > 30 and num < 40:
@@ -80,34 +82,37 @@ def numName(num):
         return "fifty-"+numName(num-50)
     
 def paddedTime():
-        hourS = time.strftime("%H")
-        hour = int(float(hourS))
-        minuteS = time.strftime("%M")
-        minute = int(float(minuteS))
-                
+        timeNow = time.localtime()
+        hour = timeNow.tm_hour
+        minute = timeNow.tm_min
+                      
         if minute == 15:
-            return "A quarter after "+numName(hour % 12)+"   "
+            ans = "A quarter after "+numName(hour % 12)
         elif minute == 30:
-            return "Half past "+numName(hour % 12)+"   "
+            ans = "Half past "+numName(hour % 12)
         elif minute == 45:
-            return "A quarter to "+numName((hour+1) % 12)+"   "
+            ans = "A quarter to "+numName((hour+1) % 12)
         elif hour == 0 and minute == 0:
-            return "Midnight"+"   "
+            ans = "Midnight"
         elif hour == 12 and minute == 0:
-            return "Noon"+"   "
+            ans = "Noon"
         elif minute == 0:
-            return numName(hour % 12)+" o'clock"+"   "
+            ans = numName(hour % 12)+" o'clock"
         elif minute < 10:
-            return numName(hour % 12)+" o-"+numName(minute)+"   "
+            ans = numName(hour % 12)+" o-"+numName(minute)
         else:
-            return numName(hour % 12)+" "+numName(minute)+"   "
+            ans = numName(hour % 12)+" "+numName(minute)
+        return ans + "   "
 
+scrollphathd.clear()
+scrollphathd.show()
 while True:
     time1=time.strftime("%H:%M")
     if time1 != time0:
         time0=time1
         scrollphathd.clear()
         scrollphathd.write_string(paddedTime(), font=font5x7, brightness=BRIGHTNESS)
+
     # Show the buffer
     scrollphathd.show()
     # Scroll the buffer content
