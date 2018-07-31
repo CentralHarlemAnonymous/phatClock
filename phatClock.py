@@ -2,8 +2,8 @@
 
 import time
 import signal
-
 import scrollphathd
+import argparse
 from scrollphathd.fonts import font5x7
 
 print("""
@@ -14,10 +14,14 @@ Press Ctrl+C to exit.
 
 """)
 
-# Brightness of the seconds bar and text
-BRIGHTNESS = 0.15
-time0="x"
-time1="y"
+parser = argparse.ArgumentParser(description='textclock code.')
+parser.add_argument('-dt' ,'-delay_text', help="text delay time", default=0.025)
+parser.add_argument('-dm' ,'-delay_message', help="message delay time", default=0.2)
+parser.add_argument('-b' ,'-brightness', help="brightness", default=0.15)
+
+
+args = parser.parse_args()
+
 
 # Uncomment the below if your display is upside down
 #   (e.g. if you're using it in a Pimoroni Scroll Bot)
@@ -102,20 +106,26 @@ def paddedTime():
             ans = numName(hour % 12)+" o-"+numName(minute)
         else:
             ans = numName(hour % 12)+" "+numName(minute)
-        return ans + "   "
+        return "    " + ans
 
-scrollphathd.clear()
-scrollphathd.show()
-while True:
-    time1=time.strftime("%H:%M")
-    if time1 != time0:
-        time0=time1
-        scrollphathd.clear()
-        scrollphathd.write_string(paddedTime(), font=font5x7, brightness=BRIGHTNESS)
+def run():
+	scrollphathd.clear()
+	scrollphathd.show()
 
-    # Show the buffer
-    scrollphathd.show()
-    # Scroll the buffer content
-    scrollphathd.scroll()
-    # Wait for 0.1s
-    time.sleep(0.05)
+	while True:
+       		textWidth=scrollphathd.write_string(paddedTime(), x=0, y=0, font=font5x7, brightness=float(args.b))
+		scrollphathd.show()
+
+		for deltaX in range(textWidth):
+    	   		scrollphathd.scroll(x=1)
+	   		scrollphathd.show()
+    	   		time.sleep(float(args.dt))
+		scrollphathd.clear()
+		scrollphathd.show()
+		time.sleep(float(args.dm))
+
+# Main function
+if __name__ == "__main__":
+    run_text = run()
+    if (not run_text.process()):
+        run_text.print_help()
