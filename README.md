@@ -1,4 +1,4 @@
-Intended for use on a Raspberry Pi Zero (or Zero W, or Zero WH) with PiMoroni Scroll Phat HD.
+Intended for use on a Raspberry Pi Zero with PiMoroni Scroll Phat HD.
 
 Requires that the PiMoroni library be installed.
 
