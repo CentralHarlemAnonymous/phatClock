@@ -4,4 +4,4 @@ Requires that the PiMoroni library be installed.
 
 Run this script and the time will be spelled out on the LEDs in words ("eleven o'clock", etc.)
 
-http://www.wheels.org/pix/phatClock.gif
+deprecated, use msScrollphat instead.
